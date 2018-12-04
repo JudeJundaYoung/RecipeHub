@@ -4,38 +4,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/homeMenuItem"
-        android:title="home"
+        android:title="Home"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/homepage">
     </item>
     <item
         android:id="@+id/favouriteMenuItem"
-        android:title="favourite"
+        android:title="Favorite"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/favorite">
     </item>
     <item
         android:id="@+id/forksMenuItem"
-        android:title="forks"
+        android:title="Published"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/forks">
     </item>
     <item
         android:id="@+id/communicationMenuItem"
-        android:title="communication"
+        android:title="Messages"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/messages">
     </item>
     <item
         android:id="@+id/usercenterMenuItem"
-        android:title="usercenter"
+        android:title="UserCenter"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/usercenter">
     </item>
 
 </menu>
