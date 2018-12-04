@@ -112,7 +112,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#ece9e9"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +127,7 @@
             android:layout_centerHorizontal="true"
             android:ems="10"
             android:hint="Click to Search"
+            android:textColorHint="#FFFFFF"
             android:maxLines="1"
             android:inputType="text"
             android:textAlignment="center"

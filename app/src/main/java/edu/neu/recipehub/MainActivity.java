@@ -20,6 +20,7 @@ import edu.neu.recipehub.fragments.CommunicationFragment;
 import edu.neu.recipehub.fragments.FavoriteFragment;
 import edu.neu.recipehub.fragments.ForksFragment;
 import edu.neu.recipehub.fragments.HomeFragment;
+import edu.neu.recipehub.fragments.SearchFragment;
 import edu.neu.recipehub.fragments.UserCenterFragment;
 import edu.neu.recipehub.objects.User;
 import edu.neu.recipehub.users.UserEntry;
@@ -28,7 +29,8 @@ import edu.neu.recipehub.utils.UIUtils;
 public class MainActivity extends AppCompatActivity
     implements SensorListener,
             HomeFragment.OnFragmentInteractionListener,
-            UserCenterFragment.OnFragmentInteractionListener{
+            UserCenterFragment.OnFragmentInteractionListener,
+            SearchFragment.OnFragmentInteractionListener {
 
 
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     private Context mContext;
     private Fragment mFragment;
+    private Fragment mPreviousFragment;
     private FragmentManager mFragmentManager;
     private BottomNavigationView mBottomNavigationView;
 
@@ -60,45 +63,70 @@ public class MainActivity extends AppCompatActivity
         initializeBottomNavigationView();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this,SensorManager.SENSOR_ACCELEROMETER);
+        mPreviousFragment = null;
     }
 
     private void initializeBottomNavigationView(){
         mFragmentManager = getSupportFragmentManager();
 
+        mFragment = HomeFragment.newInstance();
+
         // Make the activity display default mFragment.
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentFrameLayout, HomeFragment.newInstance()).commit();
+        transaction.replace(R.id.fragmentFrameLayout, mFragment).commit();
+
+
 
         mBottomNavigationView = findViewById(R.id.bottom_navigation);
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment = null;
                 switch (menuItem.getItemId()){
                     case R.id.homeMenuItem:
-                        mFragment = HomeFragment.newInstance();
+                        fragment = HomeFragment.newInstance();
+                        if (mFragment instanceof HomeFragment){
+                            return true;
+                        }
                         break;
                     case R.id.favouriteMenuItem:
-                        mFragment = FavoriteFragment.newInstance();
+                        fragment = FavoriteFragment.newInstance();
+                        if (mFragment instanceof FavoriteFragment){
+                            return true;
+                        }
                         break;
                     case R.id.forksMenuItem:
-                        mFragment = ForksFragment.newInstance();
+                        fragment = ForksFragment.newInstance();
+                        if (mFragment instanceof ForksFragment){
+                            return true;
+                        }
                         break;
                     case R.id.communicationMenuItem:
-                        mFragment = CommunicationFragment.newInstance();
+                        fragment = CommunicationFragment.newInstance();
+                        if (mFragment instanceof CommunicationFragment){
+                            return true;
+                        }
                         break;
                     case R.id.usercenterMenuItem:
-                        mFragment = UserCenterFragment.newInstance(mCurrentUser);
+                        fragment = UserCenterFragment.newInstance(mCurrentUser);
+                        if (mFragment instanceof UserCenterFragment){
+                            return true;
+                        }
                         break;
                 }
-                changeCurrentFragment(mFragment);
+                mFragment = fragment;
+                changeCurrentFragment(fragment);
                 return true;
             }
         });
     }
 
     private void changeCurrentFragment(Fragment fragment){
+        mPreviousFragment = mFragment;
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.fragmentFrameLayout, fragment).commit();
+        UIUtils.hideKeyboard(this);
     }
 
     private void getUser(String userName){
@@ -116,6 +144,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void changeFragmentInHomeFragment(Fragment fragment) {
         changeCurrentFragment(fragment);
+    }
+
+    @Override
+    public void onGoBackButtonClick() {
+        changeCurrentFragment(mPreviousFragment);
     }
 
     @Override

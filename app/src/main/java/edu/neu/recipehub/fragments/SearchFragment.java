@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.neu.recipehub.MainActivity;
 import edu.neu.recipehub.R;
 import edu.neu.recipehub.fragments.adapters.RecipeItemAdapter;
 import edu.neu.recipehub.objects.Recipe;
@@ -30,7 +32,9 @@ public class SearchFragment extends Fragment {
     private EditText searchWindow;
     private SearchResultFinder searchResultFinder;
 
-    private HomeFragment.OnFragmentInteractionListener mListener;
+    private ImageView mGoBackImageView;
+
+    private MainActivity mListener;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -79,10 +83,23 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mGoBackImageView = getView().findViewById(R.id.goBackImageView);
+
+        mGoBackImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onGoBackButtonClick();
+            }
+        });
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof HomeFragment.OnFragmentInteractionListener) {
-            mListener = (HomeFragment.OnFragmentInteractionListener) context;
+        if (context instanceof SearchFragment.OnFragmentInteractionListener) {
+            mListener = (MainActivity) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -96,6 +113,9 @@ public class SearchFragment extends Fragment {
     }
 
 
-
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onGoBackButtonClick();
+    }
 
 }
