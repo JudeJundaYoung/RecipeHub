@@ -48,6 +48,8 @@ public class RecipeFragment extends Fragment {
 
     private ImageView mLikeImageView;
 
+    private ImageView mGoBackButtonImageView;
+
     private RecyclerView mRecipePhotosRecyclerView;
 
     private TextView mRecipeNameTextView;
@@ -119,6 +121,15 @@ public class RecipeFragment extends Fragment {
 
     public void initializeView() {
 //        mRecipePhotoImageView = getView().findViewById(R.id.recipePhotoImageView);
+
+        mGoBackButtonImageView = getView().findViewById(R.id.goBackImageView);
+
+        mGoBackButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).onGoBackButtonClick();
+            }
+        });
 
         mRecipePhotosRecyclerView = getView().findViewById(R.id.recipePhotosRecyclerView);
 

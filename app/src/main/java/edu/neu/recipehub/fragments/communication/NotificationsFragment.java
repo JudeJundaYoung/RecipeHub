@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.neu.recipehub.MainActivity;
@@ -115,6 +116,7 @@ public class NotificationsFragment extends Fragment {
                         for(String string: resultList){
                             mNotificationsList.add(string);
                         }
+                        Collections.reverse(mNotificationsList);
                         mNotificationAdapter.notifyDataSetChanged();
                     }
 
@@ -135,17 +137,12 @@ public class NotificationsFragment extends Fragment {
     private void setSwipeListener(){
         mNotificationsRecyclerView.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
             @Override
-            public void onSwipeRight() {
-                super.onSwipeRight();
-                Log.d("123","!23");
-                UIUtils.showToast(getActivity(),"This is right");
-            }
-
-            @Override
             public void onSwipeLeft() {
-                super.onSwipeLeft();
-                Log.d("123","!23");
-                UIUtils.showToast(getActivity(),"This is left");
+                super.onSwipeRight();
+                ((CommunicationFragment)((MainActivity) getActivity()).getmFragment())
+                        .changeButton(CommunicationNavigationBarFragment.HIGHLIGHT_MESSAGE);
+                ((CommunicationFragment)((MainActivity) getActivity()).getmFragment())
+                        .changeLowerFragment(MessagesFragment.newInstance());
             }
         });
     }

@@ -8,11 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ import edu.neu.recipehub.R;
 import edu.neu.recipehub.fragments.adapters.RecipeItemAdapter;
 import edu.neu.recipehub.objects.Recipe;
 import edu.neu.recipehub.utils.SearchResultFinder;
+import edu.neu.recipehub.utils.UIUtils;
 
 
 public class SearchFragment extends Fragment {
@@ -59,6 +63,18 @@ public class SearchFragment extends Fragment {
         searchWindow = rootView.findViewById(R.id.searchWindow);
         searchResultView = rootView.findViewById(R.id.searchResult);
         searchWindow.requestFocus();
+        searchWindow.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if (event != null&& (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    UIUtils.hideKeyboard(getActivity());
+                    // Must return true here to consume event
+                    return true;
+                }
+                return false;
+            }
+        });
         final RecipeItemAdapter recipeItemAdapter = new RecipeItemAdapter(mRecipeList, mListener);
         searchResultFinder = new SearchResultFinder(recipeItemAdapter, mRecipeList);
         searchResultView.setAdapter(recipeItemAdapter);

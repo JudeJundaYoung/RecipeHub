@@ -307,4 +307,11 @@ public class MainActivity extends AppCompatActivity
         return mFavorites;
     }
 
+    public Fragment getmFragment() {
+        return mFragment;
+    }
+
+    public DatabaseReference getmUserDatabaseRef() {
+        return mUserDatabaseRef;
+    }
 }

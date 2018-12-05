@@ -23,14 +23,18 @@
 
         <EditText
             android:id="@+id/searchWindow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="247dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_edittext"
             android:ems="10"
             android:hint="Try: Hot Pot"
-            android:layout_marginLeft="10dp"
-            android:textColorHint="#FFFFFF"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLines="1"
+
+            android:paddingLeft="10dp"
+            android:textColorHint="#000000" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

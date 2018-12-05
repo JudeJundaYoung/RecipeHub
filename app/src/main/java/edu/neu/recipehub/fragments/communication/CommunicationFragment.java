@@ -44,6 +44,10 @@ public class CommunicationFragment extends Fragment {
 
     FrameLayout mUpperNavigationBarFrameLayout;
 
+    Fragment mLowerFragment;
+
+    FragmentManager mChildFragmentManager;
+
     public CommunicationFragment() {
         // Required empty public constructor
     }
@@ -74,6 +78,7 @@ public class CommunicationFragment extends Fragment {
         super.onStart();
         mFragmentManager = getFragmentManager();
         mUpperNavigationBarFrameLayout = getView().findViewById(R.id.communicationNavigationBarFrameLayout);
+        mChildFragmentManager = getChildFragmentManager();
         changeUpperFragment(CommunicationNavigationBarFragment.newInstance());
         changeLowerFragment(NotificationsFragment.newInstance());
     }
@@ -91,15 +96,31 @@ public class CommunicationFragment extends Fragment {
     public interface OnFragmentInteractionListener {
     }
 
-    private void changeUpperFragment(Fragment fragment) {
+    public void changeUpperFragment(Fragment fragment) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.communicationNavigationBarFrameLayout, fragment).commit();
     }
 
-    private void changeLowerFragment(Fragment fragment) {
+    public void changeLowerFragment(Fragment fragment) {
+        if (mLowerFragment instanceof NotificationsFragment && fragment instanceof NotificationsFragment){
+            return;
+        }
+        if (mLowerFragment instanceof MessagesFragment && fragment instanceof MessagesFragment){
+            return;
+        }
+        mLowerFragment = fragment;
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         //transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.communicationLowerFrameLayout, fragment).commit();
+    }
+
+    public void changeButton(int action){
+        for (Fragment fragment:mFragmentManager.getFragments()){
+            if (fragment instanceof CommunicationNavigationBarFragment){
+                UIUtils.showToast(getActivity(),"123");
+                ((CommunicationNavigationBarFragment) fragment).changeButton(action);
+            }
+        }
     }
 
 }
