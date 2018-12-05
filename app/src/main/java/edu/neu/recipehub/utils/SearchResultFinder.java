@@ -18,28 +18,28 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import edu.neu.recipehub.fragments.adapters.RecipeItemAdapter;
 import edu.neu.recipehub.objects.AlgoliaKey;
 import edu.neu.recipehub.objects.Recipe;
+import edu.neu.recipehub.objects.RecipeEntry;
 
 public class SearchResultFinder {
     private DatabaseReference mDatabaseRef;
     private Index index;
     private List<String> keyList;
     private RecipeItemAdapter recipeItemAdapter;
-    private List<Recipe> searchResult;
+    private List<Map.Entry<String, Recipe>> searchResult;
 
-    public SearchResultFinder(RecipeItemAdapter recipeItemAdapter, List<Recipe> searchResult) {
-        mDatabaseRef =  FirebaseDatabase.getInstance().getReference("RecipeHub").child("recipe");
+    public SearchResultFinder(RecipeItemAdapter recipeItemAdapter, List<Map.Entry<String, Recipe>> searchResult) {
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("RecipeHub").child("recipe");
         Client client = new Client(AlgoliaKey.ALGOLIA_ID, AlgoliaKey.ALGOLIA_ADMIN_KEY);
         index = client.getIndex("RecipeHub");
         keyList = new ArrayList<>();
         this.recipeItemAdapter = recipeItemAdapter;
         this.searchResult = searchResult;
     }
-
-
 
 
     public void search(String input) {
@@ -50,13 +50,14 @@ public class SearchResultFinder {
                 searchResult.clear();
                 recipeItemAdapter.notifyDataSetChanged();
                 searchResultJsonParser(jsonObject);
-                for(String key : keyList) {
+                for (String key : keyList) {
                     DatabaseReference ref = mDatabaseRef.child(key);
                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            String recipeKey = dataSnapshot.getKey();
                             Recipe recipe = dataSnapshot.getValue(Recipe.class);
-                            searchResult.add(recipe);
+                            searchResult.add(new RecipeEntry<String, Recipe>(recipeKey, recipe));
                             recipeItemAdapter.notifyDataSetChanged();
                         }
 
@@ -70,7 +71,7 @@ public class SearchResultFinder {
         };
         Query query = new Query();
         query.setQuery(input);
-       // query.setHitsPerPage(20);
+        // query.setHitsPerPage(20);
         index.searchAsync(query, completionHandler);
     }
 
@@ -78,7 +79,7 @@ public class SearchResultFinder {
         if (searchResult == null) return;
         JSONArray hits = searchResult.optJSONArray("hits");
         if (hits == null) return;
-        for (int i=0; i<hits.length(); i++) {
+        for (int i = 0; i < hits.length(); i++) {
             JSONObject hit = hits.optJSONObject(i);
             if (hit == null) continue;
             keyList.add(hit.optString("objectID"));
@@ -129,8 +130,7 @@ public class SearchResultFinder {
 ////        String r = "a";
 ////        System.out.println(s==r);
 ////        for(int i=0; i<2; i++)
-  //  }
-
+    //  }
 
 
 }

@@ -1,4 +1,4 @@
-package edu.neu.recipehub.fragments;
+package edu.neu.recipehub.fragments.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -64,8 +64,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof  OnFragmentInteractionListener){
-             mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         }
     }
 
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
         void changeFragmentInHomeFragment(Fragment fragment);
     }
 
-    private void initializeViews(){
+    private void initializeViews() {
         mHottestThisWeekImageView = getView().findViewById(R.id.hottestThisWeekImageView);
         mNewlyAddedImageView = getView().findViewById(R.id.newlyAddedImageView);
         mCocktailImageView = getView().findViewById(R.id.cocktailImageView);
@@ -91,27 +91,27 @@ public class HomeFragment extends Fragment {
         mHottestThisWeekImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(),"Hottest This Week!");
+                UIUtils.showToast(getActivity(), "Hottest This Week!");
                 // Change the fragment in main activity to ...
-                mListener.changeFragmentInHomeFragment(RecipeFragment.newInstance(Recipe.getDummyRecipe()));
+                mListener.changeFragmentInHomeFragment(RecipeFragment.newInstance(Recipe.getDummyRecipe(), "0000"));
             }
         });
         mNewlyAddedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(),"Newly Added!");
+                UIUtils.showToast(getActivity(), "Newly Added!");
             }
         });
         mCocktailImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(),"Cocktail!");
+                UIUtils.showToast(getActivity(), "Cocktail!");
             }
         });
         mHighestRatedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(),"Highest Rated!");
+                UIUtils.showToast(getActivity(), "Highest Rated!");
             }
         });
         mSearchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {

@@ -1,9 +1,8 @@
-package edu.neu.recipehub.fragments;
+package edu.neu.recipehub.fragments.usercenter;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,7 +35,7 @@ public class UserCenterFragment extends Fragment {
         UserCenterFragment fragment = new UserCenterFragment();
         Bundle args = new Bundle();
 
-        args.putSerializable(USER,user);
+        args.putSerializable(USER, user);
 
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +55,7 @@ public class UserCenterFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         }
     }
@@ -81,7 +80,7 @@ public class UserCenterFragment extends Fragment {
         void logOut();
     }
 
-    private void initializeView(){
+    private void initializeView() {
         mUserNameTextView = getView().findViewById(R.id.userCenterUserNameTextView);
 
         mUserNameTextView.setText(mCurrentUser.mUserName);
@@ -96,7 +95,7 @@ public class UserCenterFragment extends Fragment {
         });
     }
 
-    private void showLogOutDialog(){
+    private void showLogOutDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         dialogBuilder.setTitle("Log Out");
         dialogBuilder.setMessage("Are you sure to log out?");

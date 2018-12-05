@@ -1,4 +1,4 @@
-package edu.neu.recipehub.fragments;
+package edu.neu.recipehub.fragments.forks;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.home.HomeFragment;
 
 
 public class DescriptionFragment extends Fragment {
@@ -63,7 +64,6 @@ public class DescriptionFragment extends Fragment {
     }
 
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -84,7 +84,8 @@ public class DescriptionFragment extends Fragment {
     private void setonTextChangeListener(final EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -92,8 +93,10 @@ public class DescriptionFragment extends Fragment {
                         && !nameBox.getText().toString().isEmpty()) nextBtn.setEnabled(true);
                 else nextBtn.setEnabled(false);
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 

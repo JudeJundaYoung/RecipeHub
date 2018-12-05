@@ -24,6 +24,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         public ImageView mAvatarImageView;
         public TextView mUserNameTextView;
         public TextView mReviewContentTextView;
+
         public ViewHolder(View view) {
             super(view);
             mAvatarImageView = view.findViewById(R.id.avatarImageView);
@@ -34,7 +35,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ReviewsAdapter(List<Review> reviews) {
-        if(reviews == null) mReviews = new ArrayList<>();
+        if (reviews == null) mReviews = new ArrayList<>();
         else mReviews = new ArrayList<>(reviews);
     }
 

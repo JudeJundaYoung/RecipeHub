@@ -22,6 +22,7 @@ public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapte
         // each data item is just a string in this case
         public TextView mCounterTextView;
         public TextView mInstructionContentTextView;
+
         public ViewHolder(View view) {
             super(view);
             mCounterTextView = view.findViewById(R.id.counterTextView);
@@ -51,7 +52,7 @@ public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mCounterTextView.setText(String.valueOf(position+1));
+        holder.mCounterTextView.setText(String.valueOf(position + 1));
         holder.mInstructionContentTextView.setText(mInstructions.get(position));
     }
 

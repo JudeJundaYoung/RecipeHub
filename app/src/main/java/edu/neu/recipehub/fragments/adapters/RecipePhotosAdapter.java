@@ -27,6 +27,7 @@ public class RecipePhotosAdapter extends RecyclerView.Adapter<RecipePhotosAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView mPhotoImageView;
+
         public ViewHolder(View view) {
             super(view);
             mPhotoImageView = view.findViewById(R.id.recipePhotoImageView);

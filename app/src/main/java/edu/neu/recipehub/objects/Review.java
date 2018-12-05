@@ -9,7 +9,7 @@ public class Review {
         this.mContent = mContent;
     }
 
-    public static Review getDummyReview(){
-        return new Review(User.getDummyUser(),"This is bullshit");
+    public static Review getDummyReview() {
+        return new Review(User.getDummyUser(), "This is bullshit");
     }
 }

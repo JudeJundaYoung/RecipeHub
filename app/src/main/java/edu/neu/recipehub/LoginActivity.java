@@ -20,26 +20,29 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Start activity with customized user name.
+     *
      * @param view
      */
-    public void startButtonOnClick(View view){
+    public void startButtonOnClick(View view) {
         EditText editText = findViewById(R.id.loginNameEditText);
         String userName = editText.getText().toString();
-        Intent intent = new Intent(this,MainActivity.class);
+        if (userName.length() == 0) userName = UserEntry.ANONYMOUS_USER;
+        Intent intent = new Intent(this, MainActivity.class);
 
-        intent.putExtra(UserEntry.USER_NAME,userName);
+        intent.putExtra(UserEntry.USER_NAME, userName);
 
         startActivity(intent);
     }
 
     /**
      * Start activity by default user name.
+     *
      * @param view
      */
-    public void startAsAnonymousButtonOnClick(View view){
-        Intent intent = new Intent(this,MainActivity.class);
+    public void startAsAnonymousButtonOnClick(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
 
-        intent.putExtra(UserEntry.USER_NAME,UserEntry.ANONYMOUS_USER);
+        intent.putExtra(UserEntry.USER_NAME, UserEntry.ANONYMOUS_USER);
 
         startActivity(intent);
     }

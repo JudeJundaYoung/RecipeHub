@@ -1,7 +1,6 @@
-package edu.neu.recipehub.fragments;
+package edu.neu.recipehub.fragments.home;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -17,6 +16,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import edu.neu.recipehub.MainActivity;
 import edu.neu.recipehub.R;
@@ -27,7 +27,7 @@ import edu.neu.recipehub.utils.SearchResultFinder;
 
 public class SearchFragment extends Fragment {
     private View rootView;
-    private List<Recipe> mRecipeList;
+    private List<Map.Entry<String, Recipe>> mRecipeList;
     private RecyclerView searchResultView;
     private EditText searchWindow;
     private SearchResultFinder searchResultFinder;
@@ -60,24 +60,27 @@ public class SearchFragment extends Fragment {
         searchResultView = rootView.findViewById(R.id.searchResult);
         searchWindow.requestFocus();
         final RecipeItemAdapter recipeItemAdapter = new RecipeItemAdapter(mRecipeList, mListener);
-        searchResultFinder = new SearchResultFinder(recipeItemAdapter,mRecipeList);
+        searchResultFinder = new SearchResultFinder(recipeItemAdapter, mRecipeList);
         searchResultView.setAdapter(recipeItemAdapter);
         searchResultView.setLayoutManager(new LinearLayoutManager(getActivity(),
-                LinearLayoutCompat.VERTICAL,false));
+                LinearLayoutCompat.VERTICAL, false));
         searchWindow.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String input = searchWindow.getText().toString();
-                if(input.trim().isEmpty()) {
+                if (input.trim().isEmpty()) {
                     mRecipeList.clear();
                     recipeItemAdapter.notifyDataSetChanged();
                 } else searchResultFinder.search(input);
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
         return rootView;
     }

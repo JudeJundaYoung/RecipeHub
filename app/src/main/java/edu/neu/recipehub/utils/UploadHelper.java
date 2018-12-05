@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.recipehub.MainActivity;
-import edu.neu.recipehub.fragments.AddPhotoFragment;
-import edu.neu.recipehub.fragments.DescriptionFragment;
-import edu.neu.recipehub.fragments.HomeFragment;
-import edu.neu.recipehub.fragments.IngredientFragment;
-import edu.neu.recipehub.fragments.InstructionFragment;
-import edu.neu.recipehub.fragments.UploadFailureFragment;
-import edu.neu.recipehub.fragments.UploadSuccessFragment;
+import edu.neu.recipehub.fragments.forks.AddPhotoFragment;
+import edu.neu.recipehub.fragments.forks.DescriptionFragment;
+import edu.neu.recipehub.fragments.home.HomeFragment;
+import edu.neu.recipehub.fragments.forks.IngredientFragment;
+import edu.neu.recipehub.fragments.forks.InstructionFragment;
+import edu.neu.recipehub.fragments.forks.UploadFailureFragment;
+import edu.neu.recipehub.fragments.forks.UploadSuccessFragment;
 import edu.neu.recipehub.objects.AlgoliaKey;
 import edu.neu.recipehub.objects.Recipe;
 import edu.neu.recipehub.objects.Review;
@@ -71,7 +71,7 @@ public class UploadHelper {
         try {
             JSONObject record = generateJSON();
             record.put("objectID", key);
-            index.addObjectAsync(record, key,null);
+            index.addObjectAsync(record, key, null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -88,15 +88,15 @@ public class UploadHelper {
 
             JSONObject instructions = new JSONObject();
             for (int i = 0; i < InstructionFragment.INSTRUCTION_LIST.size(); i++) {
-                instructions.put(i+"", InstructionFragment.INSTRUCTION_LIST.get(i));
+                instructions.put(i + "", InstructionFragment.INSTRUCTION_LIST.get(i));
             }
             JSONObject reviews = new JSONObject();
-            for (int i =0 ; i < InstructionFragment.REVIEW_LIST.size(); i++) {
+            for (int i = 0; i < InstructionFragment.REVIEW_LIST.size(); i++) {
                 Review review = InstructionFragment.REVIEW_LIST.get(i);
                 JSONObject temp = new JSONObject();
                 temp.put("mUser", review.mUser.mUserName);
                 temp.put("mContent", review.mContent);
-                reviews.put(i+"", temp);
+                reviews.put(i + "", temp);
             }
 
             result.put("userName", MainActivity.USER_NAME)
@@ -104,14 +104,12 @@ public class UploadHelper {
                     .put("description", DescriptionFragment.Description)
                     .put("ingredients", ingredients)
                     .put("instructions", instructions)
-                    .put("reviews",reviews);
-        } catch (Exception ex){
+                    .put("reviews", reviews);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return result;
     }
-
-
 
 
     private class UploadPhotoTask extends AsyncTask<List<Uri>, Void, Boolean[]> {
@@ -119,7 +117,7 @@ public class UploadHelper {
         @Override
         protected Boolean[] doInBackground(List<Uri>... lists) {
             final Boolean[] success = {true};
-            for (int i=0; i < photoUri.size(); i++) {
+            for (int i = 0; i < photoUri.size(); i++) {
                 final int pos = i;
                 Uri imageUri = photoUri.get(i);
                 String fileName = System.currentTimeMillis() + "."
@@ -139,7 +137,7 @@ public class UploadHelper {
                                 success[0] = false;
                             }
                         });
-                if(isCancelled()) {
+                if (isCancelled()) {
                     success[0] = false;
                     break;
                 }
@@ -148,11 +146,12 @@ public class UploadHelper {
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {}
+        protected void onProgressUpdate(Void... values) {
+        }
 
         @Override
         protected void onPostExecute(Boolean[] success) {
-            if(!success[0]) {
+            if (!success[0]) {
                 mDatabaseRef.child(key).removeValue();
                 mStorageRef.child(key).delete();
                 mListener.changeFragmentInHomeFragment(UploadFailureFragment.newInstance());

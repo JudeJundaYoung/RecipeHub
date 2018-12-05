@@ -1,6 +1,5 @@
-package edu.neu.recipehub.fragments;
+package edu.neu.recipehub.fragments.forks;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +9,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,11 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.home.HomeFragment;
 
 import static android.app.Activity.RESULT_OK;
 
 public class AddPhotoFragment extends Fragment {
-    public static Map<Integer, Uri> URI_MAP= new LinkedHashMap<>();
+    public static Map<Integer, Uri> URI_MAP = new LinkedHashMap<>();
     private static final int PICK_IMAGE_REQUEST = 1;
     private List<Integer> windowIdList;
     private View rootView;
@@ -95,7 +94,7 @@ public class AddPhotoFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof HomeFragment.OnFragmentInteractionListener){
+        if (context instanceof HomeFragment.OnFragmentInteractionListener) {
             mListener = (HomeFragment.OnFragmentInteractionListener) context;
         }
     }
@@ -110,7 +109,7 @@ public class AddPhotoFragment extends Fragment {
     private void onAddField() {
         LayoutInflater inflator = (LayoutInflater) getActivity().
                 getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
-        View newUploadWindow = inflator.inflate(R.layout.image_upload,null);
+        View newUploadWindow = inflator.inflate(R.layout.image_upload, null);
         setOnWindowClickedListener(newUploadWindow.findViewById(R.id.uploadWindow));
         int newId = View.generateViewId();
         newUploadWindow.setId(newId);
@@ -119,15 +118,15 @@ public class AddPhotoFragment extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER;
         newUploadWindow.setLayoutParams(layoutParams);
-        parentLayout.addView(newUploadWindow, parentLayout.getChildCount()-2);
+        parentLayout.addView(newUploadWindow, parentLayout.getChildCount() - 2);
     }
 
     private void onDelete() {
         if (windowIdList.size() > 1) {
-            Integer id = windowIdList.get(windowIdList.size()-1);
+            Integer id = windowIdList.get(windowIdList.size() - 1);
             View v = rootView.findViewById(id);
             parentLayout.removeView(rootView.findViewById(id));
-            windowIdList.remove(windowIdList.size()-1);
+            windowIdList.remove(windowIdList.size() - 1);
             URI_MAP.remove(id);
         }
     }
@@ -141,13 +140,13 @@ public class AddPhotoFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode,int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
             View parent = (View) curImageView.getParent();
-            URI_MAP.put(parent.getId(),imageUri);
+            URI_MAP.put(parent.getId(), imageUri);
             Picasso.get().load(imageUri).into(curImageView);
             nextBtn.setEnabled(true);
         }

@@ -1,7 +1,6 @@
-package edu.neu.recipehub.fragments;
+package edu.neu.recipehub.fragments.forks;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.home.HomeFragment;
 
 
 public class UploadFailureFragment extends Fragment {
@@ -46,7 +46,6 @@ public class UploadFailureFragment extends Fragment {
         });
         return rootView;
     }
-
 
 
     @Override

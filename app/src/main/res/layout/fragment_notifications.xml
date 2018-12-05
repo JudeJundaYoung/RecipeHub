@@ -4,22 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.communication.CommunicationFragment">
+    tools:context=".fragments.communication.NotificationsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-
-    <FrameLayout
-        android:id="@+id/communicationNavigationBarFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/communicationLowerFrameLayout"
+    <LinearLayout
+        android:id="@+id/communicationFragmentLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
+        android:orientation="vertical">
 
-    </FrameLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notificationsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:reverseLayout="true"/>
+    </LinearLayout>
+
 </FrameLayout>
