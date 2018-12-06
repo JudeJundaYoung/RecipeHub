@@ -1,5 +1,7 @@
 package edu.neu.recipehub;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
@@ -27,6 +29,7 @@ import java.util.Stack;
 import edu.neu.recipehub.fragments.communication.CommunicationFragment;
 import edu.neu.recipehub.fragments.favorite.FavoriteFragment;
 import edu.neu.recipehub.fragments.forks.ForksFragment;
+import edu.neu.recipehub.fragments.home.CollectionFragment;
 import edu.neu.recipehub.fragments.home.HomeFragment;
 import edu.neu.recipehub.fragments.home.SearchFragment;
 import edu.neu.recipehub.fragments.usercenter.UserCenterFragment;
@@ -68,6 +71,8 @@ public class MainActivity extends AppCompatActivity
 
     private BottomNavigationView mBottomNavigationView;
 
+    private Context mContext;
+
     private SensorManager mSensorManager;
     private float mXLocation;
     private float mYLocation;
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity
         initializeBottomNavigationView();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this, SensorManager.SENSOR_ACCELEROMETER);
+        mContext = this;
     }
 
     private void initializeBottomNavigationView() {
@@ -193,6 +199,7 @@ public class MainActivity extends AppCompatActivity
             mNotificationsDatabaseRef = FirebaseDatabase.getInstance().getReference("RecipeHub")
                     .child("notifications");
         }
+
         mNotificationsDatabaseRef.child(mCurrentUser.mUserName).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -210,7 +217,23 @@ public class MainActivity extends AppCompatActivity
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("It is a dialog");
+        builder.setMessage("Do you want to get a recommendation?");
+        builder.setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final ArrayList<String> keys = new ArrayList<>();
+                keys.add("-LT-KO0_TEpgkYkkOE57");
+                keys.add("-LT-LkeyQG0EMG_2fRxo");
+                keys.add("-LT0WFt7PRaaQ7DmudKX");
+                changeCurrentFragment(CollectionFragment.newInstance(keys));
+            }
+        });
+        builder.setNegativeButton("No!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UIUtils.showToast(mContext, "You'll regret that");
+            }
+        });
         builder.show();
     }
 

@@ -1,17 +1,15 @@
 package edu.neu.recipehub.fragments.adapters;
 
-import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.List;
 
 import edu.neu.recipehub.R;
@@ -23,13 +21,13 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
     private String mOtherUser;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public ConstraintLayout mConstrainLayout;
+        public LinearLayout mLinearLayout;
         public TextView mMessageTextView;
         public CardView mCardView;
 
         public ViewHolder(View view){
             super(view);
-            mConstrainLayout = view.findViewById(R.id.chatMessageItemConstrainLayout);
+            mLinearLayout = view.findViewById(R.id.chatMessageItemLinearLayout);
             mMessageTextView = view.findViewById(R.id.chatRoomMessageTextView);
             mCardView = view.findViewById(R.id.messageItemCardView);
         }
@@ -56,14 +54,13 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
 
 
         // TODO:: HERES BUG
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) viewHolder.mCardView.getLayoutParams();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if (message.getmUserName().equals(mCurrentUser)){
-            params.setMargins(100,8,0,8);
+            params.gravity = Gravity.LEFT;
         } else {
-            params.setMargins(10,8,0,8);
+            params.rightMargin = 0;
         }
-        viewHolder.mCardView.setLayoutParams(params);
-        viewHolder.mCardView.requestLayout();
+        viewHolder.mLinearLayout.setLayoutParams(params);
     }
 
     @Override
