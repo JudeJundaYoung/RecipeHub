@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -230,6 +233,9 @@ public class RecipeFragment extends Fragment {
                 mainActivity.sentNotification(mainActivity.getmCurrentUser().mUserName
                         + " just write a review in your recipe : " + mRecipe.mRecipeName + "!",
                         mRecipe.userName);
+                List<Review> reviews = mRecipe.mReviews;
+                FirebaseDatabase.getInstance().getReference("RecipeHub")
+                        .child("recipe").child(mRecipeKey).child("mReviews").setValue(reviews);
             }
         });
 

@@ -3,6 +3,7 @@ package edu.neu.recipehub.fragments.forks;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -19,6 +20,7 @@ import java.util.List;
 
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.GoBackFragment;
 import edu.neu.recipehub.fragments.home.HomeFragment;
 import edu.neu.recipehub.objects.Review;
 import edu.neu.recipehub.utils.UploadHelper;
@@ -80,6 +82,9 @@ public class InstructionFragment extends Fragment {
                 onDelete();
             }
         });
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.upperFrameLayout, GoBackFragment.newInstance("Instructions")).commit();
 
 
         publishBtn.setOnClickListener(new View.OnClickListener() {

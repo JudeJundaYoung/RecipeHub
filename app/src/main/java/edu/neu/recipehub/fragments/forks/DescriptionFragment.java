@@ -3,6 +3,7 @@ package edu.neu.recipehub.fragments.forks;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.GoBackFragment;
 import edu.neu.recipehub.fragments.home.HomeFragment;
 
 
@@ -19,6 +22,8 @@ public class DescriptionFragment extends Fragment {
 
     public static String Description = "";
     public static String RECIPE_NAME = "";
+
+
     private HomeFragment.OnFragmentInteractionListener mListener;
     private View rootView;
     private Button nextBtn;
@@ -50,6 +55,12 @@ public class DescriptionFragment extends Fragment {
         descriptionBox = rootView.findViewById(R.id.descriptionBox);
         nextBtn = rootView.findViewById(R.id.next2);
         nameBox = rootView.findViewById(R.id.nameBox);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.upperFrameLayout, GoBackFragment.newInstance("Description")).commit();
+
+
+
         setonTextChangeListener(descriptionBox);
         setonTextChangeListener(nameBox);
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +74,10 @@ public class DescriptionFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onAttach(Context context) {

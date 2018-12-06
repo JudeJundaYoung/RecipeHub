@@ -4,6 +4,9 @@ public class ChatMessage {
     private String mMessage;
     private String mUserName;
 
+    public ChatMessage() {
+    }
+
     public ChatMessage(String mMessage, String mUserName) {
         this.mMessage = mMessage;
         this.mUserName = mUserName;

@@ -110,14 +110,17 @@ public class CommunicationFragment extends Fragment {
         }
         mLowerFragment = fragment;
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        //transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        if (mLowerFragment instanceof  NotificationsFragment) {
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+        } else {
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        }
         transaction.replace(R.id.communicationLowerFrameLayout, fragment).commit();
     }
 
     public void changeButton(int action){
         for (Fragment fragment:mFragmentManager.getFragments()){
             if (fragment instanceof CommunicationNavigationBarFragment){
-                UIUtils.showToast(getActivity(),"123");
                 ((CommunicationNavigationBarFragment) fragment).changeButton(action);
             }
         }

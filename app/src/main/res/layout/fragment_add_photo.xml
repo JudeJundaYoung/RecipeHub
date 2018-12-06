@@ -5,29 +5,40 @@
     android:layout_height="match_parent"
     tools:context=".fragments.forks.AddPhotoFragment"
     android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/upperFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </FrameLayout>
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:id = "@+id/photoParent"
+            android:id="@+id/photoParent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/photoUpload0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/photoUpload0"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/uploadWindow"
                     android:layout_width="@dimen/imageWindowWidth"
                     android:layout_height="@dimen/imageWindowHeight"
-                    android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:background="#aea6a6"
                     app:srcCompat="@drawable/add_photo" />
             </LinearLayout>

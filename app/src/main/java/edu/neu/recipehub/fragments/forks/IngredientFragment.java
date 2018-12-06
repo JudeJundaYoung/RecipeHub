@@ -3,6 +3,7 @@ package edu.neu.recipehub.fragments.forks;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.GoBackFragment;
 import edu.neu.recipehub.fragments.home.HomeFragment;
 
 public class IngredientFragment extends Fragment {
@@ -87,6 +89,11 @@ public class IngredientFragment extends Fragment {
                 onDelete();
             }
         });
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.upperFrameLayout, GoBackFragment.newInstance("Ingredients")).commit();
+
+
 
         setOnTextChangeListener(rootView.findViewById(R.id.ingredientUpload0));
         return rootView;

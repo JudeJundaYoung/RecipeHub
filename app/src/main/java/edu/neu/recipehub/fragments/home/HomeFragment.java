@@ -9,6 +9,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.neu.recipehub.R;
 import edu.neu.recipehub.objects.Recipe;
 import edu.neu.recipehub.utils.UIUtils;
@@ -87,31 +97,47 @@ public class HomeFragment extends Fragment {
         mHighestRatedImageView = getView().findViewById(R.id.highestRatedImageView);
         mSearchBox = getView().findViewById(R.id.searchBox);
 
+        final ArrayList<String> keys = new ArrayList<>();
+        keys.add("-LT-KO0_TEpgkYkkOE57");
+        keys.add("-LT-LkeyQG0EMG_2fRxo");
+        keys.add("-LT0WFt7PRaaQ7DmudKX");
 
         mHottestThisWeekImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(), "Hottest This Week!");
-                // Change the fragment in main activity to ...
-                mListener.changeFragmentInHomeFragment(RecipeFragment.newInstance(Recipe.getDummyRecipe(), "0000"));
+                mListener.changeFragmentInHomeFragment(CollectionFragment.newInstance(keys));
             }
         });
         mNewlyAddedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(), "Newly Added!");
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("RecipeHub");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<>();
+                        ArrayList<String> keys = dataSnapshot.child("recipe").getValue(t);
+                        mListener.changeFragmentInHomeFragment(CollectionFragment.newInstance(keys));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
         mCocktailImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(), "Cocktail!");
+                mListener.changeFragmentInHomeFragment(CollectionFragment.newInstance(keys));
             }
         });
         mHighestRatedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(getActivity(), "Highest Rated!");
+                mListener.changeFragmentInHomeFragment(CollectionFragment.newInstance(keys));
             }
         });
         mSearchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {

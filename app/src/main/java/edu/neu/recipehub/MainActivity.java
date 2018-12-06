@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import edu.neu.recipehub.fragments.communication.CommunicationFragment;
 import edu.neu.recipehub.fragments.favorite.FavoriteFragment;
@@ -59,9 +60,12 @@ public class MainActivity extends AppCompatActivity
 
     private List<String> mCurrentUserNotificationList;
 
+    private Stack<Fragment> mFragmentStack;
+
     private Fragment mFragment;
-    private Fragment mPreviousFragment;
+
     private FragmentManager mFragmentManager;
+
     private BottomNavigationView mBottomNavigationView;
 
     private SensorManager mSensorManager;
@@ -74,18 +78,19 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mFragmentStack = new Stack<>();
         getUser(getIntent().getStringExtra(UserEntry.USER_NAME));
         getNotifications();
         initializeBottomNavigationView();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this, SensorManager.SENSOR_ACCELEROMETER);
-        mPreviousFragment = null;
     }
 
     private void initializeBottomNavigationView() {
         mFragmentManager = getSupportFragmentManager();
 
         mFragment = HomeFragment.newInstance();
+        mFragmentStack.add(mFragment);
 
         // Make the activity display default mFragment.
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+                mFragmentStack.clear();
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.homeMenuItem:
@@ -138,7 +144,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void changeCurrentFragment(Fragment fragment) {
-        mPreviousFragment = mFragment;
+        mFragmentStack.push(fragment);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.fragmentFrameLayout, fragment).commit();
@@ -215,7 +221,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onGoBackButtonClick() {
-        changeCurrentFragment(mPreviousFragment);
+        Fragment previousFragment = mFragmentStack.pop();
+        previousFragment = mFragmentStack.pop();
+
+        mFragmentStack.push(previousFragment);
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.replace(R.id.fragmentFrameLayout, previousFragment).commit();
+        UIUtils.hideKeyboard(this);
     }
 
     @Override

@@ -8,7 +8,7 @@
     <dimen name = "descriptionBoxHeight">173dp</dimen>
     <dimen name = "instructionBoxWidth">250dp</dimen>
     <dimen name = "instructionBoxHeight">75dp</dimen>
-    <dimen name = "recipeNameSize">20sp</dimen>
+    <dimen name = "recipeNameSize">25sp</dimen>
     <dimen name = "recipeIcon">90dp</dimen>
-    <dimen name="recipeCreatorSize">15sp</dimen>
+    <dimen name="recipeCreatorSize">20sp</dimen>
 </resources>

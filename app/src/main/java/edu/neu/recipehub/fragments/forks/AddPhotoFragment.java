@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.neu.recipehub.R;
+import edu.neu.recipehub.fragments.GoBackFragment;
 import edu.neu.recipehub.fragments.home.HomeFragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -78,6 +80,9 @@ public class AddPhotoFragment extends Fragment {
                 onDelete();
             }
         });
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.upperFrameLayout, GoBackFragment.newInstance("Add Photo")).commit();
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,9 +9,17 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <FrameLayout
+        android:id="@+id/upperFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </FrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/upperFrameLayout">
 
 
         <android.support.constraint.ConstraintLayout
@@ -23,11 +31,11 @@
                 android:id="@+id/descriptionBox"
                 android:layout_width="@dimen/descriptionBoxWidth"
                 android:layout_height="@dimen/descriptionBoxHeight"
-                android:layout_marginBottom="184dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="#c4a3a3"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="184dp"
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:hint="add description..."
                 android:inputType="textMultiLine"
@@ -42,9 +50,9 @@
                 android:layout_width="@dimen/addBtnWidth"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:enabled="false"
                 android:text="Next"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,14 +63,15 @@
                 android:id="@+id/nameBox"
                 android:layout_width="@dimen/descriptionBoxWidth"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="72dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:hint="Enter the name..."
                 android:inputType="text"
                 android:maxLines="1"
-
+                android:background="@drawable/rounded_edittext"
+                android:paddingLeft="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

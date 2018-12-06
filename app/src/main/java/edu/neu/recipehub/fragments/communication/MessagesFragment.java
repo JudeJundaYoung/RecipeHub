@@ -128,6 +128,7 @@ public class MessagesFragment extends Fragment {
     private void startChat(final String userName){
         if (userName.equals(mMainActivity.getmCurrentUser().mUserName)){
             UIUtils.showToast(mMainActivity,"Don't talk to yourself!");
+            return;
         }
         mUserDateBaseReference.child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -156,6 +157,7 @@ public class MessagesFragment extends Fragment {
             key = mMainActivity.getmCurrentUser().mUserName + "+" + userName;
         }
 
-        mMainActivity.changeFragmentInHomeFragment();
+        mMainActivity.changeFragmentInHomeFragment(ChatRoomFragment.newInstance(key,
+                mMainActivity.getmCurrentUser().mUserName, userName));
     }
 }

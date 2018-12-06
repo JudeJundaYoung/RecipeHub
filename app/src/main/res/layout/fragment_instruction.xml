@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".fragments.forks.InstructionFragment"
     android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/upperFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    </FrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
